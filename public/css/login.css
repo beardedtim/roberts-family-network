@@ -1,0 +1,13 @@
+form {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+aside.caveat {
+  max-width: 30rem;
+}

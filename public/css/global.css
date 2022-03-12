@@ -1,0 +1,28 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  font-size: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+body > main {
+  flex-grow: 2;
+  padding: 0.5rem;
+}
+
+body > footer,
+body > header {
+  flex-grow: 0;
+  padding: 0.25rem;
+}

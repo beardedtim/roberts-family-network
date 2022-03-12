@@ -1,0 +1,17 @@
+<%- include('./partials/header') %>
+<form class="form-floating">
+  <h2 class="display-2">Welcome back 👋!</h2>
+  <aside class="caveat">
+    <p>
+      If you are wanting to join the RFN, you will need to talk to someone within the network
+      directly. This system does not offer a way to automatically register.
+    </p>
+  </aside>
+  <label for="username">Username</label>
+  <input type="text" class="form-control form-control-lg" id="username" name="username" placeholder="timboslice">
+
+  <label for="otp" class="form-label">One Time Passcode</label>
+  <input id="otp" type="text" name="otp" class="form-control form-control-lg"  placeholder="123456" />
+  <button type="submit" class="btn btn-primary mb-3">Confirm identity</button>
+</form>
+<%- include('./partials/footer') %>

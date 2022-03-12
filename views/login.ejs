@@ -1,5 +1,5 @@
 <%- include('./partials/header') %>
-<form class="form-floating">
+<form>
   <h2 class="display-2">Welcome back 👋!</h2>
   <aside class="caveat">
     <p>
@@ -7,11 +7,15 @@
       directly. This system does not offer a way to automatically register.
     </p>
   </aside>
-  <label for="username">Username</label>
-  <input type="text" class="form-control form-control-lg" id="username" name="username" placeholder="timboslice">
+  <div class="form-floating mb-3">
+    <input type="text" class="form-control" id="username" name="username" placeholder="timboslice">
+    <label for="username">Username</label>
+  </div>
 
-  <label for="otp" class="form-label">One Time Passcode</label>
-  <input id="otp" type="text" name="otp" class="form-control form-control-lg"  placeholder="123456" />
+  <div class="form-floating mb-3">
+    <input id="otp" type="text" name="otp" class="form-control" placeholder="123456" />
+    <label for="otp">One Time Passcode</label>
+  </div>
   <button type="submit" class="btn btn-primary mb-3">Confirm identity</button>
 </form>
 <%- include('./partials/footer') %>

@@ -4,12 +4,20 @@ import HTTP from '@app/connections/http'
 
 import { Router as UserRouter } from '@app/domains/users'
 import { Router as InternalRouter } from '@app/domains/internal'
+
+import {
+  Router as ItemsRouter,
+  Controller as ItemsController,
+} from '@app/domains/items'
+
 import * as Middleware from '@app/middleware/http'
 
 const main = async () => {
   await Internal.Controller.init()
 
-  HTTP.use('/users', UserRouter).use('/internal', InternalRouter)
+  HTTP.use('/users', UserRouter)
+    .use('/internal', InternalRouter)
+    .use('/items', ItemsRouter)
 
   HTTP.get('/login', (_, res) => {
     res.render('login', {
@@ -22,8 +30,43 @@ const main = async () => {
     '/',
     Middleware.authenticate,
     Middleware.onlyAuthenticated,
-    (_, res) => {
-      res.render('home')
+    async (req, res) => {
+      const items = await ItemsController.getFeedForuser(req.user?.id!)
+      console.log(items)
+      res.render('home', {
+        items,
+        styles: [
+          'https://cdn.quilljs.com/1.3.6/quill.snow.css',
+          '/css/home.css',
+        ],
+        scripts: ['https://cdn.quilljs.com/1.3.6/quill.js', '/js/home.js'],
+      })
+    }
+  )
+
+  HTTP.get(
+    '/items/:id',
+    Middleware.authenticate,
+    Middleware.onlyAuthenticated,
+    (req, res, next) => {
+      const object = `ITEM::${req.params.id}`
+
+      return Middleware.isAuthorized({
+        action: 'VIEW',
+        object,
+      })(req, res, next)
+    },
+    async (req, res) => {
+      const item = await ItemsController.getById(req.params.id)
+
+      res.render('item', {
+        item,
+        styles: [
+          'https://cdn.quilljs.com/1.3.6/quill.snow.css',
+          '/css/home.css',
+        ],
+        scripts: ['https://cdn.quilljs.com/1.3.6/quill.js', '/js/home.js'],
+      })
     }
   )
 

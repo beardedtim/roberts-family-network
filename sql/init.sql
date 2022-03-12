@@ -25,3 +25,16 @@ CREATE TABLE IF NOT EXISTS user_roles (
   role_id UUID NOT NULL,
   user_id UUID NOT NULL 
 );
+
+-- We want to allow users to create
+-- Items that are shared with others
+CREATE TABLE IF NOT EXISTS items (
+  id UUID NOT NULL DEFAULT gen_random_uuid(),
+  creator_id UUID NOT NULL DEFAULT gen_random_uuid(),
+  type TEXT NOT NULL,
+  data JSONB NOT NULL DEFAULT '{}',
+  created_at timestamp NOT NULL DEFAULT NOW(),
+  last_updated timestamp NOT NULL DEFAULT NOW(),
+  PRIMARY KEY (id),
+  FOREIGN KEY (creator_id) REFERENCES users(id)
+);

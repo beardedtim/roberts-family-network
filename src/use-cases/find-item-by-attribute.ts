@@ -1,25 +1,25 @@
 import Log from '@app/monitoring/log'
 import DB from '@app/connections/database'
-import { SavedRole } from '@app/types'
+import { SavedItem } from '@app/types'
 
 const log = Log.child({
-  'use-case': 'find-role-by-attribute',
+  'use-case': 'find-item-by-attribute',
 })
 
-const findRoleByAttribute = async (attribute: string, value: unknown) => {
+const findItemByAttribute = async (attribute: string, value: unknown) => {
   log.trace({ attribute, value }, 'Finding by attribute')
 
   const { rows } = await DB.query(
     `SELECT
       *
     FROM
-      roles
+      items
     WHERE
       ${attribute} = $1`,
     [value]
   )
 
-  return rows[0] as SavedRole
+  return rows[0] as SavedItem
 }
 
-export default findRoleByAttribute
+export default findItemByAttribute

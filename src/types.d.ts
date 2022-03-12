@@ -9,6 +9,14 @@ export interface SavedRole {
   name: string
 }
 
+export interface SavedItem {
+  id: string
+  type: string
+  data: {
+    [x: string]: any
+  }
+}
+
 export type EpochTimeStamp = number
 
 export interface EventWrapper<T = any> {

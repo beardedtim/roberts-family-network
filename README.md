@@ -1,26 +1,45 @@
 # Roberts Family Network
 
-## Architecture
+## Development
 
-### Use Cases
+```
+git clone git@github.com:beardedtim/roberts-family-network.git
+cd roberts-family-network
+docker-compose up -d
+cp .env.example .env.local
+npm run dev
+```
 
-RFN is built using `use-cases`. Each piece of functionality is created in isolation
-as a use-case. Things that are common such as Logging or Database Connections are
-pulled into their own modules.
+This will autogenerate three users: `tim`, `kit`, and `lar`, along
+with assigning them `overlord` and/or `admin` roles. You can change
+or modify this inside of `sql/init.sql`
 
-For each _thing_ that the _system_ can do, it should be have a single use-case
-that does it. You can use that use-case _elsewhere_ to drive higher level
-logic such as mapping requests or interacting at a Domain level.
+## Authorization
 
-### Buses
+This system _only_ uses `OTP` passwords via an authenticator app,
+such as [this app](https://play.google.com/store/apps/details?id=com.twofasapp&hl=en_US&gl=US)
+that you may use for other 2FA systems.
 
-#### System Wide
+You will need to generate a QR code for each user by going to
 
-_**Events**_
+```
+GET /internal/qrcodes/:user-idd
+```
 
-- INIT
-  - **Cause**: When the system first starts up
-  - **Payload**: `none`
-- EXIT
-  - **Cause**: When the system has been requested to shut down
-  - **Payload**: `{ reason: string }`
+This is to be removed before going public and to only be exposed/used locally when signing someone
+up for the first time.
+
+The flow for signing someone in would be:
+
+- Create a DB record of their username and email
+- Use the ID generated to generate the QR code
+- Have user scan QR code to add to authenticator app on their device
+
+The flow for logging in would be:
+
+- GET /login
+- Fill out username and current code in authenticator app
+
+![When logged out](https://imgur.com/rEChzxq.png)
+![When viewing feed](https://imgur.com/onckkrz.png)
+![When viewing an item](https://imgur.com/vQ5hGg1.png)

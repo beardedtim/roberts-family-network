@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "cookie-parser": "^1.4.6",
+    "date-fns": "^2.28.0",
     "ejs": "^3.1.6",
     "express": "^4.17.3",
     "joi": "^17.6.0",

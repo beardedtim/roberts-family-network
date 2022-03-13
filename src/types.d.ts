@@ -2,6 +2,7 @@ export interface SavedUser {
   id: string
   email: string
   username: string
+  is_public: boolean
 }
 
 export interface SavedRole {
@@ -12,6 +13,7 @@ export interface SavedRole {
 export interface SavedItem {
   id: string
   type: string
+  creator_id: string
   data: {
     [x: string]: any
   }

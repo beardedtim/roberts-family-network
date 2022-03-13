@@ -1,3 +1,5 @@
+SET TIME ZONE 'UTC';
+
 -- Anyone that wants to perform an action
 -- will need to have been attached to some
 -- user, even if that is a guest or "dark"
@@ -31,10 +33,11 @@ CREATE TABLE IF NOT EXISTS user_roles (
 CREATE TABLE IF NOT EXISTS items (
   id UUID NOT NULL DEFAULT gen_random_uuid(),
   creator_id UUID NOT NULL DEFAULT gen_random_uuid(),
+  is_public BOOLEAN NOT NULL DEFAULT true,
   type TEXT NOT NULL,
   data JSONB NOT NULL DEFAULT '{}',
-  created_at timestamp NOT NULL DEFAULT NOW(),
-  last_updated timestamp NOT NULL DEFAULT NOW(),
+  created_at timestamp with time zone NOT NULL DEFAULT NOW(),
+  last_updated timestamp with time zone NOT NULL DEFAULT NOW(),
   PRIMARY KEY (id),
   FOREIGN KEY (creator_id) REFERENCES users(id)
 );

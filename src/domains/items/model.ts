@@ -5,21 +5,29 @@ export const create = async ({
   user,
   data,
   type,
+  created_at,
+  last_updated,
 }: {
   user: string
   data: any
   type: string
+  created_at: string
+  last_updated: string
 }) => {
   await createSchema.validateAsync({
     user,
     data,
     type,
+    created_at,
+    last_updated,
   })
 
   return createItem({
     user,
     data,
     type,
+    created_at,
+    last_updated,
   })
 }
 

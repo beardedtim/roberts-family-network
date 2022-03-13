@@ -9,18 +9,23 @@ window.addEventListener('load', () => {
 
   button.addEventListener('click', async (event) => {
     const data = instance.root.innerHTML
+    const body = {
+      payload: {
+        raw: data,
+      },
+      type: 'text',
+      created_at: new Date().toISOString(),
+      last_updated: new Date().toISOString(),
+    }
 
+    console.dir(body)
+    console.log('BODY')
     await fetch('/items', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        payload: {
-          raw: data,
-        },
-        type: 'text',
-      }),
+      body: JSON.stringify(body),
     })
       .then((x) => x.json())
       .then(({ data, error }) => {

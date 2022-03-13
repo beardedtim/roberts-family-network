@@ -3,3 +3,16 @@
   width: 100%;
   margin-bottom: 3rem;
 }
+
+#feed {
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#feed .card {
+  width: 95%;
+}

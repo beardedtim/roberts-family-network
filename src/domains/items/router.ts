@@ -20,6 +20,8 @@ router.post(
       user,
       data: req.body.payload,
       type: req.body.type,
+      created_at: req.body.created_at,
+      last_updated: req.body.last_updated,
     })
 
     res.status(201).json({

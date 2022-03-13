@@ -5,6 +5,8 @@ import HTTP from '@app/connections/http'
 import { Router as UserRouter } from '@app/domains/users'
 import { Router as InternalRouter } from '@app/domains/internal'
 
+import { formatDistanceToNow, formatDistance } from 'date-fns'
+
 import {
   Router as ItemsRouter,
   Controller as ItemsController,
@@ -31,10 +33,11 @@ const main = async () => {
     Middleware.authenticate,
     Middleware.onlyAuthenticated,
     async (req, res) => {
-      const items = await ItemsController.getFeedForuser(req.user?.id!)
-      console.log(items)
+      const items = await ItemsController.getFeedForUser(req.user?.id!)
+
       res.render('home', {
         items,
+        formatDistance,
         styles: [
           'https://cdn.quilljs.com/1.3.6/quill.snow.css',
           '/css/home.css',

@@ -10,20 +10,24 @@ const createItem = async ({
   user,
   data,
   type,
+  created_at,
+  last_updated,
 }: {
   user: string
   data: any
   type: string
+  created_at: string
+  last_updated: string
 }) => {
   const { rows } = await DB.query(
     `
     INSERT INTO items
-      (type, data, creator_id)
+      (type, data, creator_id, created_at, last_updated)
     VALUES
-      ($1, $2, $3)
+      ($1, $2, $3, $4, $5)
     RETURNING *
   `,
-    [type, data, user]
+    [type, data, user, created_at, last_updated]
   )
 
   return rows[0] as SavedItem

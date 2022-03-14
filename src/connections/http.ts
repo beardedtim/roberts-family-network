@@ -1,5 +1,6 @@
 import express from 'express'
 import cookies from 'cookie-parser'
+import * as Middleware from '@app/middleware/http'
 
 const server = express()
 
@@ -32,5 +33,7 @@ server.use((req, res, next) => {
 server.use(cookies())
 
 server.use(express.static('public'))
+
+server.use(Middleware.auth0)
 
 export default server

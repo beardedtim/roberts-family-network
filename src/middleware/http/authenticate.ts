@@ -1,23 +1,24 @@
 import { RequestHandler } from 'express'
-import { verify, JwtPayload } from 'jsonwebtoken'
-import { SavedUser } from '@app/types'
-
-const secret = process.env.JWT_SIGNING_SECRET!
+import { findByEmail } from '@app/domains/users/model'
 
 const authenticate: RequestHandler = async (req, _, next) => {
-  let token
-  if (req.headers.authorization) {
-    token = req.headers.authorization.replace('Bearer ', '')
-  } else if (req.cookies.authorization) {
-    token = req.cookies.authorization
-  }
+  // @ts-ignore
+  console.log(req.oidc.isAuthenticated(), 'OIDC')
+  if (req.oidc.isAuthenticated()) {
+    console.log(req.oidc.user)
+    const oidcUser = req.oidc.user
+    const dbUser = await findByEmail(oidcUser.email)
 
-  if (token) {
-    let user: SavedUser | undefined
+    // OpenID but not inside internal DB
+    // FIX THIS!
+    if (!dbUser) {
+      return next()
+    }
 
-    try {
-      user = (await verify(token, secret)) as JwtPayload as SavedUser
-    } catch (e) {}
+    const user = {
+      ...oidcUser,
+      ...dbUser,
+    }
 
     req.user = user
   }

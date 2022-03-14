@@ -5,7 +5,7 @@ import HTTP from '@app/connections/http'
 import { Router as UserRouter } from '@app/domains/users'
 import { Router as InternalRouter } from '@app/domains/internal'
 
-import { formatDistanceToNow, formatDistance } from 'date-fns'
+import { formatDistance } from 'date-fns'
 
 import {
   Router as ItemsRouter,
@@ -20,13 +20,6 @@ const main = async () => {
   HTTP.use('/users', UserRouter)
     .use('/internal', InternalRouter)
     .use('/items', ItemsRouter)
-
-  HTTP.get('/login', (_, res) => {
-    res.render('login', {
-      styles: ['/css/login.css'],
-      scripts: ['/js/login.js'],
-    })
-  })
 
   HTTP.get(
     '/',

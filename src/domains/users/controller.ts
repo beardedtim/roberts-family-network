@@ -57,24 +57,14 @@ export const createTokenForUsername = async (username: string) => {
 
 export const updateUserProfile = async (
   id: string,
-  {
-    birthday,
-    phone,
-  }: {
-    birthday: string
-    phone: string
-  }
+  update: { [x: string]: any }
 ) => {
-  if (!birthday && !phone) {
+  if (Object.keys(update).length === 0) {
     return Model.findById(id)
   }
+  await userProfileUpdate.validateAsync(update)
 
-  await userProfileUpdate.validateAsync({ birthday, phone })
-
-  const updatedUser = await Model.updateProfileById(id, {
-    birthday,
-    phone,
-  })
+  const updatedUser = await Model.updateProfileById(id, update)
 
   return updatedUser
 }

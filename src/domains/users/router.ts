@@ -17,12 +17,10 @@ export default router.patch(
   json(),
   async (req, res, next) => {
     try {
-      const { birthday, phone } = req.body
-
-      const updatedUser = await Controller.updateUserProfile(req.params.id, {
-        birthday,
-        phone,
-      })
+      const updatedUser = await Controller.updateUserProfile(
+        req.params.id,
+        req.body
+      )
 
       res.json({
         data: updatedUser,

@@ -10,7 +10,8 @@
       <tr>
         <th scope="col">Email</th>
         <th scope="col">Birthday</th>
-        <th scope="col">Contact: Phone</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Address</th>
       </tr>
     </thead>
     <tbody>
@@ -23,6 +24,23 @@
         </th>
         <th scope="row">
           <%= member.profile.phone || 'Unkown' %>
+        </th>
+        <th scope="row">
+          <span>
+            <%= member.profile.address1 %>
+          </span>
+          <br />
+          <span>
+            <%= member.profile.address2 %>
+          </span>
+          <br />
+          <span>
+            <%= member.profile.city ? member.profile.city + ', ' : '' %> <%= member.profile.state %>
+          </span>
+          <br />
+          <span>
+            <%= member.profile.zip %>
+          </span>
         </th>
       </tr>
     </tbody>

@@ -8,6 +8,26 @@
     <label for="phone" class="form-label">Contact Phone Number With Area Code</label>
     <input class="form-control" id="phone" value="<%= member.profile.phone%>" name="phone" />
   </div>
+  <div class="mb-3">
+    <label for="address1" class="form-label">Street Address</label>
+    <input class="form-control" id="address1" value="<%= member.profile.address1%>" name="address1" />
+  </div>
+  <div class="mb-3">
+    <label for="address2" class="form-label">Apt #, Suite</label>
+    <input class="form-control" id="address2" value="<%= member.profile.address2%>" name="address2" />
+  </div>
+  <div class="mb-3">
+    <label for="city" class="form-label">City</label>
+    <input class="form-control" id="city" value="<%= member.profile.city%>" name="city" />
+  </div>
+  <div class="mb-3">
+    <label for="state" class="form-label">State | Providence</label>
+    <input class="form-control" id="state" value="<%= member.profile.state%>" name="state" />
+  </div>
+  <div class="mb-3">
+    <label for="zip" class="form-label">Zipcode</label>
+    <input class="form-control" id="zip" value="<%= member.profile.zip%>" name="zip" />
+  </div>
   <button type="submit" class="btn btn-primary">Update Profile</button>
 </form>
 <script>
@@ -19,13 +39,21 @@
       const formData = new FormData(e.target)
       const data = {}
 
-      if (formData.has('birthday')) {
-        data.birthday = formData.get('birthday')
+      const setIfPresent = (key) => {
+        if (formData.has(key)) {
+          data[key] = formData.get(key)
+        }
       }
 
-      if (formData.has('phone')) {
-        data.phone = formData.get('phone')
-      }
+      setIfPresent('birthday')
+      setIfPresent('phone')
+      setIfPresent('address1')
+      setIfPresent('address2')
+      setIfPresent('city')
+      setIfPresent('state')
+      setIfPresent('zip')
+
+
 
       await fetch('/api/users/<%= member.id %>/profile', {
         method: 'PATCH',

@@ -20,4 +20,9 @@ export const validateOTP = Joi.object({
 export const userProfileUpdate = Joi.object({
   birthday: Joi.string().optional().allow(''),
   phone: Joi.string().optional().allow(''),
+  address1: Joi.string().optional().allow(''),
+  address2: Joi.string().optional().allow(''),
+  city: Joi.string().optional().allow(''),
+  state: Joi.string().optional().allow(''),
+  zip: Joi.string().optional().allow(''),
 })

@@ -4,7 +4,10 @@ import emitUserEvent from '@app/use-cases/emit-user-event'
 import validateOTP from '@app/use-cases/validate-otp'
 import createJWT from '@app/use-cases/create-jwt'
 
-import { validateOTP as validateOTPInput } from './validators'
+import {
+  validateOTP as validateOTPInput,
+  userProfileUpdate,
+} from './validators'
 import * as Model from './model'
 import { EVENTS } from './bus'
 
@@ -50,4 +53,28 @@ export const createTokenForUsername = async (username: string) => {
   const user = await Model.findByUsername(username)
 
   return createJWT(user)
+}
+
+export const updateUserProfile = async (
+  id: string,
+  {
+    birthday,
+    phone,
+  }: {
+    birthday: string
+    phone: string
+  }
+) => {
+  if (!birthday && !phone) {
+    return Model.findById(id)
+  }
+
+  await userProfileUpdate.validateAsync({ birthday, phone })
+
+  const updatedUser = await Model.updateProfileById(id, {
+    birthday,
+    phone,
+  })
+
+  return updatedUser
 }

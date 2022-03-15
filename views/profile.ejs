@@ -1,0 +1,34 @@
+<%- include('./partials/header') %>
+<div id="profile">
+  <img src="<%= member.avatar || `https://ui-avatars.com/api/?name=${member.username}&rounded=true`%>"
+    alt="<%= member.username%> profile picture" />
+  <h1>
+    <%= member.username %>
+  </h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Email</th>
+        <th scope="col">Birthday</th>
+        <th scope="col">Contact: Phone</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">
+          <%= member.email %>
+        </th>
+        <th scope="row">
+          <%= member.profile.birthday || 'Unknown' %>
+        </th>
+        <th scope="row">
+          <%= member.profile.phone || 'Unkown' %>
+        </th>
+      </tr>
+    </tbody>
+  </table>
+  <% if (typeof user !=='undefined' && member.id===user.id) { %>
+    <%- include('./partials/member-profile-edit') %>
+  <% } %>
+</div>
+<%- include('./partials/footer') %>

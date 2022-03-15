@@ -3,6 +3,8 @@ import findUserByAttribute from '@app/use-cases/find-user-by-attribute'
 import viewRolesForUser from '@app/use-cases/view-roles-for-user'
 import assignUserRole from '@app/use-cases/assign-user-role'
 import listUsers from '@app/use-cases/list-users'
+import updateProfileByUserId from '@app/use-cases/update-profile-by-user-id'
+
 import { newUser, listUsersQuery } from './validators'
 
 export const create = async ({
@@ -53,3 +55,5 @@ export const addRole = (user_id: string, role_id: string) =>
     user: user_id,
     role: role_id,
   })
+
+export const updateProfileById = updateProfileByUserId

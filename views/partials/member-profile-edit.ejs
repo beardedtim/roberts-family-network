@@ -1,0 +1,42 @@
+<form id="profile-update">
+  <h3>Edit your profile information</h3>
+  <div class="mb-3">
+    <label for="birthday" class="form-label">Birthday</label>
+    <input type="date" class="form-control" id="birthday" name="birthday" value="<%= member.profile.birthday %>" />
+  </div>
+  <div class="mb-3">
+    <label for="phone" class="form-label">Contact Phone Number With Area Code</label>
+    <input class="form-control" id="phone" value="<%= member.profile.phone%>" name="phone" />
+  </div>
+  <button type="submit" class="btn btn-primary">Update Profile</button>
+</form>
+<script>
+  window.addEventListener('load', () => {
+    const form = document.getElementById('profile-update')
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault()
+      const formData = new FormData(e.target)
+      const data = {}
+
+      if (formData.has('birthday')) {
+        data.birthday = formData.get('birthday')
+      }
+
+      if (formData.has('phone')) {
+        data.phone = formData.get('phone')
+      }
+
+      await fetch('/api/users/<%= member.id %>/profile', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      }).then(x => x.json())
+      .then(({ data, error }) => {
+        window.location = window.location
+      })
+    })
+  })
+</script>

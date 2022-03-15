@@ -4,7 +4,7 @@ import emitItemsEvent from '@app/use-cases/emit-item-event'
 import filterItemsByUser from '@app/use-cases/filter-items-by-user'
 import findItemByAttribute from '@app/use-cases/find-item-by-attribute'
 import findUserByAttribute from '@app/use-cases/find-user-by-attribute'
-
+import getFeedItemsByUser from '@app/use-cases/get-feed-items-by-user'
 import * as Model from './model'
 import { EVENTS } from './bus'
 
@@ -25,15 +25,9 @@ export const create = async (data: any) => {
 export const getFeedForUser = async (user: string) => {
   log.trace({ user }, 'Generting Feed for user')
 
-  const items = await filterItemsByUser({ user })
+  const items = await getFeedItemsByUser(user)
 
-  const withAuthors = await Promise.all(
-    items.map(async (item) => ({
-      ...item,
-      author: await findUserByAttribute('id', item.creator_id),
-    }))
-  )
-  return withAuthors
+  return items
 }
 
 export const getById = async (id: string) => {

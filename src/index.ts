@@ -2,7 +2,7 @@ import Log from '@app/monitoring/log'
 import * as Internal from '@app/domains/internal'
 import HTTP from '@app/connections/http'
 
-import { Router as UserRouter } from '@app/domains/users'
+import { Router as UserRouter, Model as UserModel } from '@app/domains/users'
 import { Router as InternalRouter } from '@app/domains/internal'
 
 import { formatDistance } from 'date-fns'
@@ -17,7 +17,7 @@ import * as Middleware from '@app/middleware/http'
 const main = async () => {
   await Internal.Controller.init()
 
-  HTTP.use('/users', UserRouter)
+  HTTP.use('/api/users', UserRouter)
     .use('/internal', InternalRouter)
     .use('/items', ItemsRouter)
 
@@ -63,6 +63,25 @@ const main = async () => {
         ],
         scripts: ['https://cdn.quilljs.com/1.3.6/quill.js', '/js/home.js'],
       })
+    }
+  )
+
+  HTTP.get(
+    '/members/:id',
+    Middleware.authenticate,
+    Middleware.onlyAuthenticated,
+    async (req, res, next) => {
+      try {
+        const user = await UserModel.findById(req.params.id!)
+
+        res.render('profile', {
+          member: user,
+          styles: ['/css/profile.css'],
+          scripts: [],
+        })
+      } catch (e) {
+        return next(e)
+      }
     }
   )
 

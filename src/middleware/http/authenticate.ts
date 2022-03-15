@@ -3,9 +3,7 @@ import { findByEmail } from '@app/domains/users/model'
 
 const authenticate: RequestHandler = async (req, _, next) => {
   // @ts-ignore
-  console.log(req.oidc.isAuthenticated(), 'OIDC')
   if (req.oidc.isAuthenticated()) {
-    console.log(req.oidc.user)
     const oidcUser = req.oidc.user
     const dbUser = await findByEmail(oidcUser.email)
 

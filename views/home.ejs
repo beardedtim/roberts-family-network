@@ -6,7 +6,12 @@
     <% if (item.type==='text' ) { %>
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title"><%= item.author.username %> posted <%= formatDistance(new Date(item.created_at), new Date(), { addSuffix: true }) %> </h5>
+          <h5 class="card-title">
+            <a href="/members/<%= item.author.id %>">
+              <%= item.author.username %>
+            </a>
+            posted <%= formatDistance(new Date(item.created_at), new Date(), { addSuffix: true }) %>
+          </h5>
           <div class="card-text">
             <%- item.data.raw %>
           </div>

@@ -16,3 +16,8 @@ export const validateOTP = Joi.object({
   code: Joi.string().required(),
   username: Joi.string().required().min(3),
 })
+
+export const userProfileUpdate = Joi.object({
+  birthday: Joi.string().optional().allow(''),
+  phone: Joi.string().optional().allow(''),
+})

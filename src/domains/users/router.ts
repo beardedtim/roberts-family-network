@@ -1,48 +1,34 @@
 import { Router, json } from 'express'
 import * as Controller from './controller'
+import * as Middleware from '@app/middleware/http'
 
 const router = Router()
 
-export default router
-  .get('/', async (req, res, next) => {
+export default router.patch(
+  '/:id/profile',
+  Middleware.authenticate,
+  Middleware.onlyAuthenticated,
+  async (req, res, next) => {
+    Middleware.isAuthorized({
+      action: 'UPDATE',
+      object: `PROFILE::${req.params.id}`,
+    })(req, res, next)
+  },
+  json(),
+  async (req, res, next) => {
     try {
-      const { limit = 100, offset = 0 } = req.query
+      const { birthday, phone } = req.body
+
+      const updatedUser = await Controller.updateUserProfile(req.params.id, {
+        birthday,
+        phone,
+      })
+
       res.json({
-        data: await Controller.list({
-          limit: Number(limit),
-          offset: Number(offset),
-        }),
+        data: updatedUser,
       })
     } catch (e) {
       return next(e)
     }
-  })
-  .post('/otps/validate', json(), async (req, res) => {
-    const { code, username } = req.body
-
-    const valid = await Controller.validatePasscode({ code, username })
-
-    if (!valid) {
-      return res.status(400).json({
-        error: {
-          message: 'Bad Code or Username',
-        },
-      })
-    }
-
-    const token = await Controller.createTokenForUsername(username)
-
-    res.cookie('authorization', token)
-
-    res.status(200).json({
-      data: {
-        valid: true,
-        token,
-      },
-    })
-  })
-  .get('/logout', async (req, res) => {
-    res.clearCookie('authorization')
-
-    res.redirect('/')
-  })
+  }
+)

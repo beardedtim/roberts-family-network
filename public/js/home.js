@@ -18,8 +18,6 @@ window.addEventListener('load', () => {
       last_updated: new Date().toISOString(),
     }
 
-    console.dir(body)
-    console.log('BODY')
     await fetch('/items', {
       method: 'POST',
       headers: {

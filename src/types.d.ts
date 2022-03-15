@@ -3,6 +3,9 @@ export interface SavedUser {
   email: string
   username: string
   is_public: boolean
+  profile: {
+    [x: string]: any
+  }
 }
 
 export interface SavedRole {

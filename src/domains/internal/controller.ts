@@ -30,6 +30,15 @@ export const init = async () => {
       'We did not creat admin. This may be because it was already done.'
     )
   }
+
+  try {
+    await runSqlFile(`${sqlDir}/create-user-profile.sql`)
+  } catch (e) {
+    log.warn(
+      { err: e },
+      'We did not add user profiles. This may be because it was already done.'
+    )
+  }
 }
 
 export const exit = async (reason?: string) => {

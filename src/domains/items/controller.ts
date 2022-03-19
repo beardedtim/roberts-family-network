@@ -1,10 +1,9 @@
 import Log from '@app/monitoring/log'
 
 import emitItemsEvent from '@app/use-cases/emit-item-event'
-import filterItemsByUser from '@app/use-cases/filter-items-by-user'
 import findItemByAttribute from '@app/use-cases/find-item-by-attribute'
-import findUserByAttribute from '@app/use-cases/find-user-by-attribute'
 import getFeedItemsByUser from '@app/use-cases/get-feed-items-by-user'
+import processItemByType from '@app/use-cases/process-item-by-type'
 import * as Model from './model'
 import { EVENTS } from './bus'
 
@@ -27,7 +26,7 @@ export const getFeedForUser = async (user: string) => {
 
   const items = await getFeedItemsByUser(user)
 
-  return items
+  return Promise.all(items.map(processItemByType))
 }
 
 export const getById = async (id: string) => {
@@ -35,5 +34,5 @@ export const getById = async (id: string) => {
 
   const item = await findItemByAttribute('id', id)
 
-  return item
+  return processItemByType(item)
 }

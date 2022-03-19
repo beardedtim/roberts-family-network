@@ -19,6 +19,11 @@ const createItem = async ({
   created_at: string
   last_updated: string
 }) => {
+  log.trace(
+    { user, data, type, created_at, last_updated },
+    'Creating item in DB'
+  )
+
   const { rows } = await DB.query(
     `
     INSERT INTO items

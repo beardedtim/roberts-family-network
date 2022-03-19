@@ -1,0 +1,27 @@
+<div class="card" >
+  <% if (item.type === 'image') { %>
+    <img
+      class="card-img-top"
+      src="<%= item.data.url %>"
+      alt="<%= item.data.description || item.data.title + " photo"%>"
+    />
+    <p>
+      <%= item.data.title %>
+    </p>
+  <% } %>
+
+  <div class="card-body">
+    <h5 class="card-title">
+      <a href="/members/<%= item.author.id %>">
+        <%= item.author.username %>
+      </a>
+      posted <%= formatDistance(new Date(item.created_at), new Date(), { addSuffix: true }) %>
+    </h5>
+    <% if (item.type === 'text') { %>
+      <div class="card-text">
+        <%- item.data.raw %>
+      </div>
+    <% } %>
+    <a href="/items/<%= item.id %>" class="btn btn-primary">See Post</a>
+  </div>
+</div>

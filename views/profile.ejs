@@ -1,52 +1,73 @@
+
 <%- include('./partials/header') %>
 <div id="profile">
-  <img src="<%= member.avatar || `https://ui-avatars.com/api/?name=${member.username}&rounded=true`%>"
-    alt="<%= member.username%> profile picture" />
   <h1>
     <%= member.username %>
   </h1>
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">Email</th>
-        <th scope="col">Birthday</th>
-        <th scope="col">Phone</th>
-        <th scope="col">Address</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">
-          <%= member.email %>
-        </th>
-        <th scope="row">
-          <%= member.profile.birthday || 'Unknown' %>
-        </th>
-        <th scope="row">
-          <%= member.profile.phone || 'Unkown' %>
-        </th>
-        <th scope="row">
-          <span>
-            <%= member.profile.address1 %>
-          </span>
-          <br />
-          <span>
-            <%= member.profile.address2 %>
-          </span>
-          <br />
-          <span>
-            <%= member.profile.city ? member.profile.city + ', ' : '' %> <%= member.profile.state %>
-          </span>
-          <br />
-          <span>
-            <%= member.profile.zip %>
-          </span>
-        </th>
-      </tr>
-    </tbody>
-  </table>
-  <% if (typeof user !=='undefined' && member.id===user.id) { %>
-    <%- include('./partials/member-profile-edit') %>
-  <% } %>
+  <img class="profile-picture img-fluid"
+    src="<%= member.profile.avatar || `https://ui-avatars.com/api/?name=${member.username}&rounded=true`%>"
+    alt="<%= member.username%> profile picture" />
+    <div class="data">
+      <h3>
+        My birthday is 
+        <time datetime="<%= member.profile.birthday %>">
+          <% if (member.profile.birthday) { %>
+            <%= methods.formatDate(methods.parseTimestamp(member.profile.birthday), 'LLLL do, yyyy') %>
+          <% } else { %>
+            Unknown. Ask them to update this!
+          <% }  %>
+        </time>
+      </h3>
+      <h3>
+        My phone number is
+        <a href="tel:<%= member.profile?.phone?.replace(/\-/g, '') ?? '#' %>">
+          <%= member.profile.phone || 'Unknown. Ask them to update this!' %>
+        </a>
+      </h3>
+      <h3>
+        My current addres is
+      </h3>
+      <% if (member.profile.address1 && member.profile.city && member.profile.state && member.profile.zip) { %>
+        <span>
+          <%= member.profile.address1 %>
+        </span>
+        <br />
+        <span>
+          <%= member.profile.address2 %>
+        </span>
+        <br />
+        <span>
+          <%= member.profile.city ? member.profile.city + ', ' : '' %>
+            <%= member.profile.state %>
+        </span>
+        <br />
+        <span>
+          <%= member.profile.zip %>
+        </span>
+        <% } else { %>
+          <aside class="missing">
+            <p>I haven't put enough to ship. Ask me to update this! Below is all I have put</p>
+            <span>
+              <%= member.profile.address1 %>
+            </span>
+            <br />
+            <span>
+              <%= member.profile.address2 %>
+            </span>
+            <br />
+            <span>
+              <%= member.profile.city ? member.profile.city + ', ' : '' %>
+                <%= member.profile.state %>
+            </span>
+            <br />
+            <span>
+              <%= member.profile.zip %>
+            </span>
+          </aside>
+          <% } %>
+  </div>
 </div>
+<% if (typeof user !=='undefined' && member.id===user.id) { %>
+  <%- include('./partials/member-profile-edit') %>
+<% } %>
 <%- include('./partials/footer') %>

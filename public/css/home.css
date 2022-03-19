@@ -4,15 +4,21 @@
   margin-bottom: 3rem;
 }
 
+#home {
+  width: 90%;
+  max-width: 1250;
+  margin: 0 auto;
+}
+
 #feed {
   width: 100%;
-  max-width: 1080px;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 5rem;
 }
 
 #feed .card {
   width: 95%;
+  margin-bottom: 1.75rem;
 }

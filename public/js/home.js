@@ -1,39 +1,77 @@
 window.addEventListener('load', () => {
   const instance = new window.Quill('#text-input', {
     theme: 'snow',
+    modules: {
+      syntax: true,
+      toolbar: [
+        ['bold', 'italic', 'underline', 'strike'], // toggled buttons
+        ['blockquote', 'code-block'],
+
+        [{ header: 1 }, { header: 2 }], // custom button values
+        [{ list: 'ordered' }, { list: 'bullet' }],
+        [{ script: 'sub' }, { script: 'super' }], // superscript/subscript
+        [{ indent: '-1' }, { indent: '+1' }], // outdent/indent
+        [{ direction: 'rtl' }], // text direction
+
+        [{ size: ['small', false, 'large', 'huge'] }], // custom dropdown
+        [{ header: [1, 2, 3, 4, 5, 6, false] }],
+
+        [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+        [{ font: [] }],
+        [{ align: [] }],
+        ['clean'], // remove formatting button
+      ],
+    },
   })
 
   instance.focus()
 
-  const button = document.querySelector('button[type="submit"]')
+  // const button = document.querySelector('button[type="submit"]')
+  const form = document.querySelector('form')
+  const itemTypeTabs = document.getElementById('item-type-tab')
 
-  button.addEventListener('click', async (event) => {
-    const data = instance.root.innerHTML
-    const body = {
-      payload: {
-        raw: data,
-      },
-      type: 'text',
-      created_at: new Date().toISOString(),
-      last_updated: new Date().toISOString(),
+  const getCurrentItemType = () => {
+    const navButtons = itemTypeTabs.querySelectorAll('button.nav-link')
+    const [activeButton] = [...navButtons]
+      .filter((button) => button.classList.contains('active'))
+      .map((button) => button.id)
+
+    return activeButton?.replace('-tab', '')
+  }
+
+  const getFormDataForType = (type, data) => {
+    const formData = new FormData()
+    formData.set('type', type)
+    formData.set('created_at', new Date().toISOString())
+    formData.set('last_updated', new Date().toISOString())
+
+    if (type === 'text') {
+      formData.set('raw', instance.root.innerHTML)
     }
+
+    if (type === 'image') {
+      formData.set('image', data.get('image'))
+      formData.set('title', data.get('title'))
+      formData.set('description', data.get('description'))
+    }
+
+    return formData
+  }
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault()
+
+    const data = new FormData(event.target)
+    const type = getCurrentItemType()
+    const formData = getFormDataForType(type, data)
 
     await fetch('/items', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body),
+      body: formData,
     })
-      .then((x) => x.json())
+      .then((x) => x.text())
       .then(({ data, error }) => {
-        if (error) {
-          alert(
-            'There was an issue validating. Please ensure you entered your correct username and the corresponding passcode from your authenticator app'
-          )
-        } else {
-          window.location = '/'
-        }
+        window.location = '/'
       })
   })
 })

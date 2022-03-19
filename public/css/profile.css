@@ -1,6 +1,23 @@
 #profile {
-  width: 95%;
-  margin: 0 auto;
-  padding: 5rem;
-  max-width: 1250px;
+  padding: 1.5rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 5rem;
+}
+
+.data {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 3rem;
+}
+
+.data h3 {
+  margin-bottom: 2rem;
+}
+
+#profile-update {
+  padding: 3rem;
 }

@@ -5,7 +5,7 @@ import HTTP from '@app/connections/http'
 import { Router as UserRouter, Model as UserModel } from '@app/domains/users'
 import { Router as InternalRouter } from '@app/domains/internal'
 
-import { formatDistance } from 'date-fns'
+import { formatDistance, format } from 'date-fns'
 
 import {
   Router as ItemsRouter,
@@ -32,10 +32,15 @@ const main = async () => {
         items,
         formatDistance,
         styles: [
+          'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/dark.min.css',
           'https://cdn.quilljs.com/1.3.6/quill.snow.css',
           '/css/home.css',
         ],
-        scripts: ['https://cdn.quilljs.com/1.3.6/quill.js', '/js/home.js'],
+        scripts: [
+          'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js',
+          'https://cdn.quilljs.com/1.3.6/quill.js',
+          '/js/home.js',
+        ],
       })
     }
   )
@@ -58,10 +63,15 @@ const main = async () => {
       res.render('item', {
         item,
         styles: [
+          'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/default.min.css',
           'https://cdn.quilljs.com/1.3.6/quill.snow.css',
           '/css/home.css',
         ],
-        scripts: ['https://cdn.quilljs.com/1.3.6/quill.js', '/js/home.js'],
+        scripts: [
+          'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js',
+          'https://cdn.quilljs.com/1.3.6/quill.js',
+          '/js/home.js',
+        ],
       })
     }
   )
@@ -76,6 +86,21 @@ const main = async () => {
 
         res.render('profile', {
           member: user,
+          methods: {
+            formatDate: format,
+            parseTimestamp: (str: string) => {
+              const [year, month, day] = str.split('-')
+
+              return new Date(
+                // year is normal
+                Number(year),
+                // MONTH IS 0 BASED INDEX
+                Number(month) - 1,
+                // day seems normal
+                Number(day)
+              )
+            },
+          },
           styles: ['/css/profile.css'],
           scripts: [],
         })

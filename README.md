@@ -37,6 +37,4 @@ _**Authentication by Auth0**_
 
 ## Demos
 
-_**Update 1**_
-
-<iframe src="https://www.loom.com/embed/18cb3422f158435d94a2d96916d96b30" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+[_**Update 1**_](https://www.loom.com/share/18cb3422f158435d94a2d96916d96b30)

@@ -31,9 +31,6 @@ _**Profile**_
 - Others
   ![](https://imgur.com/uxuGPZ0.png)
 
-- Your self
-  ![](https://imgur.com/OL4PFI7.png)
-
 _**Authentication by Auth0**_
 
 ![](https://imgur.com/hSAobpl.png)

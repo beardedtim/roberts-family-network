@@ -11,12 +11,14 @@
   <% } %>
 
   <div class="card-body">
-    <h5 class="card-title">
+    <div class="card-title">
       <a href="/members/<%= item.author.id %>">
-        <%= item.author.username %>
+        <img class="profile-picture img"
+          src="<%= item.author.profile.avatar || `https://ui-avatars.com/api/?name=${item.author.username}&rounded=true`%>"
+          alt="<%= item.author.username%> profile picture" />
       </a>
       posted <%= formatDistance(new Date(item.created_at), new Date(), { addSuffix: true }) %>
-    </h5>
+    </div>
     <% if (item.type === 'text') { %>
       <div class="card-text">
         <%- item.data.raw %>

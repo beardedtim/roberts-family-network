@@ -3,11 +3,10 @@
 <% if (item.type==='text' ) { %>
   <%- item.data.raw %>
 <% } else if(item.type === 'image') { %>
-<img
-  class="img-fluid"
-  src="<%= item.data.url %>"
-  alt="<%= item.data.description || item.data.title + " photo"%>"
-/>
+<a href="<%= item.data.url %>" target="_blank" rel="noopener noreferer">
+  <img class="img-fluid" src="<%= item.data.url %>" alt="<%= item.data.description || item.data.title + " photo"%>"
+  />
+</a>
 <h1>
   <%= item.data.title %>
 </h1>

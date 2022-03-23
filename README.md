@@ -2,11 +2,28 @@
 
 ## Development
 
+### Prereqs
+
+- Docker
+- Docker Compose
+- Node.JS
+
 ```
+# clone code
 git clone git@github.com:beardedtim/roberts-family-network.git
+
 cd roberts-family-network
+
+# start database and other backing services
 docker-compose up -d
+
+# set up .env.local
 cp .env.example .env.local
+
+# install deps
+npm i
+
+# run in dev mode
 npm run dev
 ```
 

@@ -4,6 +4,7 @@ import HTTP from '@app/connections/http'
 
 import { Router as UserRouter, Model as UserModel } from '@app/domains/users'
 import { Router as InternalRouter } from '@app/domains/internal'
+import userCanPerformAction from '@app/use-cases/user-can-perform-action'
 
 import { formatDistance, format } from 'date-fns'
 
@@ -35,6 +36,7 @@ const main = async () => {
         methods: {
           formatDistance,
           format,
+          formatDate: format,
         },
         styles: [
           'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/dark.min.css',
@@ -83,6 +85,11 @@ const main = async () => {
           },
           parseMarkdown: marked.parse,
         },
+        canEdit: await userCanPerformAction({
+          user: req.user?.id || '',
+          action: 'UPDATE',
+          object: `ITEM::${req.params.id}`,
+        }),
         styles: [
           'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/default.min.css',
           'https://cdn.quilljs.com/1.3.6/quill.snow.css',
@@ -93,6 +100,54 @@ const main = async () => {
           'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js',
           'https://cdn.quilljs.com/1.3.6/quill.js',
           '/js/home.js',
+        ],
+      })
+    }
+  )
+
+  HTTP.get(
+    '/items/:id/edit',
+    Middleware.authenticate,
+    Middleware.onlyAuthenticated,
+    (req, res, next) => {
+      const object = `ITEM::${req.params.id}`
+
+      return Middleware.isAuthorized({
+        action: 'UPDATE',
+        object,
+      })(req, res, next)
+    },
+    async (req, res) => {
+      const item = await ItemsController.getById(req.params.id)
+
+      res.render('edit-item', {
+        item,
+        methods: {
+          formatDate: format,
+          parseTimestamp: (str: string) => {
+            const [year, month, day] = str.split('-')
+
+            return new Date(
+              // year is normal
+              Number(year),
+              // MONTH IS 0 BASED INDEX
+              Number(month) - 1,
+              // day seems normal
+              Number(day)
+            )
+          },
+          parseMarkdown: marked.parse,
+        },
+        styles: [
+          'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/default.min.css',
+          'https://cdn.quilljs.com/1.3.6/quill.snow.css',
+          '/css/home.css',
+          '/css/item.css',
+        ],
+        scripts: [
+          'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js',
+          'https://cdn.quilljs.com/1.3.6/quill.js',
+          '/js/edit-item.js',
         ],
       })
     }

@@ -23,15 +23,15 @@
       <!-- Tab panes -->
       <div class="tab-content">
         <div class="tab-pane active form-floating" id="text" role="tabpanel" aria-labelledby="text-tab">
-          <%- include('./partials/item-types/text/form.ejs', { item: { data: { } }}) %>
+          <%- include('./partials/item-types/text/form.ejs', { item: { data: { } }, update: false}) %>
         </div>
 
         <div class="tab-pane" id="photo" role="tabpanel" aria-labelledby="image-tab">
-          <%- include('./partials/item-types/photo/form.ejs', { item: { data: { } }}) %>
+          <%- include('./partials/item-types/photo/form.ejs', { item: { data: { } }, update: false }) %>
         </div>
 
         <div class="tab-pane" id="event" role="tabpanel" aria-labelledby="event-tab">
-          <%- include('./partials/item-types/event/form.ejs', { item: { data: { } }}) %>
+          <%- include('./partials/item-types/event/form.ejs', { item: { data: { } }, update: false}) %>
         </div>
       </div>
 

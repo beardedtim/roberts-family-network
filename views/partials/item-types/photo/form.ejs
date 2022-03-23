@@ -1,12 +1,14 @@
+<% if (!update) { %>
 <div class="mb-3">
   <label for="photo-input" class="form-label">File</label>
   <input class="form-control" type="file" id="photo-input" name="image">
 </div>
+<% } %>
 <div class="mb-3">
   <label for="photo-title" class="form-label">Title</label>
-  <input class="form-control" type="text" id="photo-title" name="title">
+  <input class="form-control" type="text" id="photo-title" name="title" value="<%= item.data.title %>">
 </div>
 <div class="mb-3">
   <label for="photo-description" class="form-label">Description</label>
-  <textarea class="form-control" type="text" id="photo-description" name="description"></textarea>
+  <textarea class="form-control" type="text" id="photo-description" name="description"><%= item.data.description %></textarea>
 </div>

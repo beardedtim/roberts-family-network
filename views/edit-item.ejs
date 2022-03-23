@@ -1,7 +1,37 @@
-<% if (item.type === 'text') { %>
-  <%- include('./partials/item-types/text/form.ejs', { item: item }) %>
-<% } else if (item.type === 'photo') { %>
-  <%- include('./partials/item-types/photo/form.ejs', { item: item }) %>
-<% } else if (item.type==='event' ) { %>
-  <%- include('./partials/item-types/event/form.ejs', { item: item }) %>
-<% } %>
+<%- include('./partials/header') %>
+
+<form data-type="<%= item.type %>" data-itemid="<%= item.id %>" data-start="<%= item.data.start_datetime %>" data-end="<%= item.data.end_datetime %>">
+  <% if (item.type==='text' ) { %>
+    <%- include('./partials/item-types/text/form.ejs', { item: item, update: true }) %>
+  <% } else if (item.type === 'image' ) { %>
+    <%- include('./partials/item-types/photo/form.ejs', { item: item, update: true }) %>
+  <% } else if (item.type === 'event' ) { %>
+    <%- include('./partials/item-types/event/form.ejs', { item: item, update: true }) %>
+  <% } %>
+  <button type="submit button" class="btn btn-primary">
+    Update
+  </button>
+  <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+    Delete
+  </button>
+</form>
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Are You Sure?</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete the item? There is no undoing this. All related
+        items such as comments and links will be orphaned and you will need to manually
+        delete them if you wish them to be removed as well.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" id="delete-item">Delete Item</button>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('./partials/footer') %>

@@ -18,7 +18,7 @@
       Start: <%= methods.format(new Date(item.data.start_datetime), 'iii MMMM do, y h:mm a' ) %>
     </h5>
     <h5>
-      End: <%= methods.format(new Date(item.data.start_datetime), 'iii MMMM do, y h:mm a' ) %>
+      End: <%= methods.format(new Date(item.data.end_datetime), 'iii MMMM do, y h:mm a' ) %>
     </h5>
     <a href="/items/<%= item.id %>" class="btn btn-primary">See Post</a>
   </div>

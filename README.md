@@ -38,3 +38,9 @@ _**Authentication by Auth0**_
 ## Demos
 
 [_**Update 1**_](https://www.loom.com/share/18cb3422f158435d94a2d96916d96b30)
+
+- Basics built
+
+[_**Update 2**_](https://www.loom.com/share/7cc9015519da435296f33e776c95a415)
+
+- New Types along with editing and deleting

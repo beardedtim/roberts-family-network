@@ -1,11 +1,15 @@
 <%- include('./partials/header') %>
 <div class="item">
 <% if (item.type==='text' ) { %>
-  <%- include('./partials/item-types/text/item.ejs',{ item: item}) %>
+  <%- include('./partials/item-types/text/item.ejs',{ item: item }) %>
 <% } else if(item.type === 'image') { %>
-  <%- include('./partials/item-types/photo/item.ejs',{ item: item}) %>
+  <%- include('./partials/item-types/photo/item.ejs',{ item: item }) %>
 <% }  else if(item.type === 'event') { %>
-  <%- include('./partials/item-types/event/item.ejs',{ item: item}) %>
+  <%- include('./partials/item-types/event/item.ejs',{ item: item }) %>
 <% } %>
-
+<% if (canEdit) { %>
+  <a href="/items/<%= item.id %>/edit">
+    Edit
+  </a>
+<% } %>
 <%- include('./partials/footer') %>

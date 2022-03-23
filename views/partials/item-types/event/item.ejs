@@ -1,7 +1,5 @@
-<a href="<%= item.data.url %>" target="_blank" rel="noopener noreferer">
-  <img class="img-fluid" src="<%= item.data.url %>" alt="<%= item.data.description || item.data.title + " photo"%>"
-  />
-</a>
+<img class="img-fluid" src="<%= item.data.url %>" alt="<%= item.data.description || item.data.title + " photo"%>"
+/>
 <div id="event-data">
   <div class="group">
     <h1>
@@ -13,7 +11,7 @@
     <li class="list-group-item">Starts: <%= methods.formatDate(new
         Date(item.data.start_datetime), 'iii MMMM do, y h:mm a' ) %>
     </li>
-    <li class="list-group-item">Ends: <%= methods.formatDate(new Date(item.data.start_datetime), 'iii MMMM do, y h:mm a'
+    <li class="list-group-item">Ends: <%= methods.formatDate(new Date(item.data.end_datetime), 'iii MMMM do, y h:mm a'
         ) %>
     </li>
     <li class="list-group-item">

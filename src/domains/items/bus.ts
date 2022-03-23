@@ -1,5 +1,5 @@
 import { TypedEmitter } from 'tiny-typed-emitter'
-import { EventWrapper, SavedUser } from '@app/types'
+import { EventWrapper, SavedItem } from '@app/types'
 
 /**
  * The events that this bus will emit
@@ -7,10 +7,14 @@ import { EventWrapper, SavedUser } from '@app/types'
  */
 export enum EVENTS {
   CREATED = 'CREATED',
+  DELETED = 'DELETED',
+  UPDATED = 'UPDATED',
 }
 
 export interface EventHandlers {
-  CREATED: (event: EventWrapper<SavedUser>) => unknown
+  CREATED: (event: EventWrapper<SavedItem>) => unknown
+  DELETED: (event: EventWrapper<SavedItem>) => unknown
+  UPDATED: (event: EventWrapper<SavedItem>) => unknown
 }
 
 class ItemsDomainBus extends TypedEmitter<EventHandlers> {

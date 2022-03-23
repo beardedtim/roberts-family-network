@@ -1,5 +1,9 @@
+import { SavedItem } from '@app/types'
 import createItem from '@app/use-cases/create-item'
-import { create as createSchema } from './validators'
+import deleteItemByID from '@app/use-cases/delete-item-by-id'
+import findItemByAttribute from '@app/use-cases/find-item-by-attribute'
+import updateItemById from '@app/use-cases/update-item-by-id'
+import { create as createSchema, update as updateSchema } from './validators'
 
 interface NewItem {
   /**
@@ -70,4 +74,15 @@ export const create = async ({ user, data }: NewItem) => {
   return createItem(item)
 }
 
-export const getRecentItemsByUser = async (userId: string) => {}
+export const deleteById = deleteItemByID
+
+export const findById = (id: string) => findItemByAttribute('id', id)
+
+export const updateById = async (
+  id: string,
+  update: Partial<SavedItem['data']>
+) => {
+  await updateSchema.validateAsync(update)
+
+  return updateItemById(id, update)
+}

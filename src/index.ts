@@ -7,6 +7,8 @@ import { Router as InternalRouter } from '@app/domains/internal'
 
 import { formatDistance, format } from 'date-fns'
 
+import { marked } from 'marked'
+
 import {
   Router as ItemsRouter,
   Controller as ItemsController,
@@ -30,7 +32,10 @@ const main = async () => {
 
       res.render('home', {
         items,
-        formatDistance,
+        methods: {
+          formatDistance,
+          format,
+        },
         styles: [
           'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/dark.min.css',
           'https://cdn.quilljs.com/1.3.6/quill.snow.css',
@@ -62,10 +67,27 @@ const main = async () => {
 
       res.render('item', {
         item,
+        methods: {
+          formatDate: format,
+          parseTimestamp: (str: string) => {
+            const [year, month, day] = str.split('-')
+
+            return new Date(
+              // year is normal
+              Number(year),
+              // MONTH IS 0 BASED INDEX
+              Number(month) - 1,
+              // day seems normal
+              Number(day)
+            )
+          },
+          parseMarkdown: marked.parse,
+        },
         styles: [
           'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/default.min.css',
           'https://cdn.quilljs.com/1.3.6/quill.snow.css',
           '/css/home.css',
+          '/css/item.css',
         ],
         scripts: [
           'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js',

@@ -1,29 +1,7 @@
-<div class="card" >
-  <% if (item.type === 'image') { %>
-    <img
-      class="card-img-top"
-      src="<%= item.data.url %>"
-      alt="<%= item.data.description || item.data.title + " photo"%>"
-    />
-    <p>
-      <%= item.data.title %>
-    </p>
-  <% } %>
-
-  <div class="card-body">
-    <div class="card-title">
-      <a href="/members/<%= item.author.id %>">
-        <img class="profile-picture img"
-          src="<%= item.author.profile.avatar || `https://ui-avatars.com/api/?name=${item.author.username}&rounded=true`%>"
-          alt="<%= item.author.username%> profile picture" />
-      </a>
-      posted <%= formatDistance(new Date(item.created_at), new Date(), { addSuffix: true }) %>
-    </div>
-    <% if (item.type === 'text') { %>
-      <div class="card-text">
-        <%- item.data.raw %>
-      </div>
-    <% } %>
-    <a href="/items/<%= item.id %>" class="btn btn-primary">See Post</a>
-  </div>
-</div>
+<% if (item.type === 'text') { %>
+ <%- include('./item-types/text/feed-item.ejs', { item: item }) %>
+<% } else if (item.type === 'image') { %>
+  <%- include('./item-types/photo/feed-item.ejs', { item: item }) %>
+<% } else if (item.type === 'event') { %>
+  <%- include('./item-types/event/feed-item.ejs', { item: item }) %>
+<% } %>

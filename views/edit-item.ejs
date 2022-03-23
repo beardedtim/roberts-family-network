@@ -1,0 +1,7 @@
+<% if (item.type === 'text') { %>
+  <%- include('./partials/item-types/text/form.ejs', { item: item }) %>
+<% } else if (item.type === 'photo') { %>
+  <%- include('./partials/item-types/photo/form.ejs', { item: item }) %>
+<% } else if (item.type==='event' ) { %>
+  <%- include('./partials/item-types/event/form.ejs', { item: item }) %>
+<% } %>

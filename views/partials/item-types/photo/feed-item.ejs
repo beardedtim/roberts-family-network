@@ -1,0 +1,22 @@
+<div class="card">
+    <img
+      class="card-img-top"
+      src="<%= item.data.url %>"
+      alt="<%= item.data.description || item.data.title + " photo"%>"
+    />
+
+  <div class="card-body">
+    <div class="card-title">
+      <a href="/members/<%= item.author.id %>">
+        <img class="profile-picture img"
+          src="<%= item.author.profile.avatar || `https://ui-avatars.com/api/?name=${item.author.username}&rounded=true`%>"
+          alt="<%= item.author.username%> profile picture" />
+      </a>
+      posted <%= methods.formatDistance(new Date(item.created_at), new Date(), { addSuffix: true }) %>
+    </div>
+    <h3>
+      <%= item.data.title %>
+    </h3>
+    <a href="/items/<%= item.id %>" class="btn btn-primary">See Post</a>
+  </div>
+</div>

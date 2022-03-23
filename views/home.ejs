@@ -1,52 +1,49 @@
 <%- include('./partials/header') %>
-<div id="home">
-  <h1>
-    Well, hi hey hello there <%= user.username %>!
-  </h1>
-  <!-- Nav tabs -->
-  <ul class="nav nav-tabs" id="item-type-tab" role="tablist">
-    <li class="nav-item" role="presentation">
-      <button class="nav-link active" id="text-tab" data-bs-toggle="tab" data-bs-target="#text" type="button" role="tab"
-        aria-controls="text" aria-selected="true">Text</button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link" id="image-tab" data-bs-toggle="tab" data-bs-target="#photo" type="button" role="tab"
-        aria-controls="photo" aria-selected="false">Picture</button>
-    </li>
-  </ul>
-  
-  <form>
-    <!-- Tab panes -->
-    <div class="tab-content">
-      <div class="tab-pane active form-floating" id="text" role="tabpanel" aria-labelledby="text-tab">
-        <div class="form-control" placeholder="Leave a comment here" id="text-input"></div>
-      </div>
-    
-      <div class="tab-pane" id="photo" role="tabpanel" aria-labelledby="image-tab">
-        <div class="mb-3">
-          <label for="photo-input" class="form-label">File</label>
-          <input class="form-control" type="file" id="photo-input" name="image">
-        </div>
-        <div class="mb-3">
-          <label for="photo-title" class="form-label">Title</label>
-          <input class="form-control" type="text" id="photo-title" name="title">
-        </div>
-        <div class="mb-3">
-          <label for="photo-description" class="form-label">Description</label>
-          <textarea class="form-control" type="text" id="photo-description" name="description"></textarea>
-        </div>
-      </div>
-    </div>
-    
-    <button type="submit" type="button" class="btn btn-primary">
-      Share
-    </button>
-  </form>
-  <div id="feed">
-    <% items.forEach(item=> { %>
-      <%- include('./partials/feed-card', { item: item }) %>
-        <% }) %>
-  </div>
-</div>
+  <div id="home">
+    <h1>
+      Well, hi hey hello there <%= user.username %>!
+    </h1>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" id="item-type-tab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="text-tab" data-bs-toggle="tab" data-bs-target="#text" type="button"
+          role="tab" aria-controls="text" aria-selected="true">Text</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="image-tab" data-bs-toggle="tab" data-bs-target="#photo" type="button" role="tab"
+          aria-controls="photo" aria-selected="false">Picture</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="event-tab" data-bs-toggle="tab" data-bs-target="#event" type="button" role="tab"
+          aria-controls="event" aria-selected="false">Event</button>
+      </li>
+    </ul>
 
-<%- include('./partials/footer') %>
+    <form>
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <div class="tab-pane active form-floating" id="text" role="tabpanel" aria-labelledby="text-tab">
+          <%- include('./partials/item-types/text/form.ejs', { item: { data: { } }}) %>
+        </div>
+
+        <div class="tab-pane" id="photo" role="tabpanel" aria-labelledby="image-tab">
+          <%- include('./partials/item-types/photo/form.ejs', { item: { data: { } }}) %>
+        </div>
+
+        <div class="tab-pane" id="event" role="tabpanel" aria-labelledby="event-tab">
+          <%- include('./partials/item-types/event/form.ejs', { item: { data: { } }}) %>
+        </div>
+      </div>
+
+      <button type="submit" type="button" class="btn btn-primary">
+        Share
+      </button>
+    </form>
+    <div id="feed">
+      <% items.forEach(item=> { %>
+        <%- include('./partials/feed-card', { item: item }) %>
+          <% }) %>
+    </div>
+  </div>
+
+  <%- include('./partials/footer') %>

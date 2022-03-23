@@ -11,7 +11,7 @@ interface NewItem {
     /**
      * What type of Item is this?
      */
-    type: 'image' | 'text'
+    type: 'image' | 'text' | 'event'
     /**
      * When did the Client think
      * they created this?
@@ -25,7 +25,7 @@ interface NewItem {
     /**
      * What is a plain-text, human
      * readable description? Used
-     * for alt text
+     * for alt text in Image type
      */
     description?: string
     /**
@@ -43,6 +43,14 @@ interface NewItem {
      * Item represents
      */
     raw?: string
+    /**
+     * The Event Start Datetime
+     */
+    start_datetime: string
+    /**
+     * The Event End Datetime
+     */
+    end_datetime: string
   }
 }
 

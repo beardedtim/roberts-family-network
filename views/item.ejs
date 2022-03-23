@@ -1,19 +1,11 @@
 <%- include('./partials/header') %>
 <div class="item">
 <% if (item.type==='text' ) { %>
-  <%- item.data.raw %>
+  <%- include('./partials/item-types/text/item.ejs',{ item: item}) %>
 <% } else if(item.type === 'image') { %>
-<a href="<%= item.data.url %>" target="_blank" rel="noopener noreferer">
-  <img class="img-fluid" src="<%= item.data.url %>" alt="<%= item.data.description || item.data.title + " photo"%>"
-  />
-</a>
-<h1>
-  <%= item.data.title %>
-</h1>
-<p>
-  <%= item.data.description %>
-</p>
-</div>
+  <%- include('./partials/item-types/photo/item.ejs',{ item: item}) %>
+<% }  else if(item.type === 'event') { %>
+  <%- include('./partials/item-types/event/item.ejs',{ item: item}) %>
 <% } %>
 
 <%- include('./partials/footer') %>

@@ -1,0 +1,28 @@
+<div class="mb-3">
+  <label for="event-image-input" class="form-label">Header Image</label>
+  <input class="form-control" type="file" id="event-image-input" name="event-image" />
+</div>
+<div class="mb-3">
+  <label for="event-title-input" class="form-label">Title</label>
+  <input class="form-control" type="text" id="event-title-input" name="event-title" placeholder="Get Ready to Party!!!" value="<%= item.data.title %>">
+</div>
+<div class="mb-3">
+  <label for="event-description" class="form-label">Description</label>
+  <textarea class="form-control" type="text" id="event-description" name="event-description"
+    rows="5"><%= item.data.description || 'Let\'s go boys!' %></textarea>
+</div>
+<div class="mb-3">
+  <label for="event-address" class="form-label">Address</label>
+  <textarea class="form-control" type="text" id="event-address" name="event-address" rows="3">
+<%= item.data.address || `
+1234 Main St
+Cookeville, TN
+38501
+`.trim() %></textarea>
+</div>
+<div class="input-group mb-3">
+  <span class="input-group-text">Goes from</span>
+  <input type="datetime-local" class="form-control" name="event-start-datetime" aria-label="Start Time" value="<%= new Date(item.data.start_datetime || new Date().toLocaleString()).toLocaleString() %>">
+  <span class="input-group-text">until</span>
+  <input type="datetime-local" class="form-control" name="event-end-datetime" aria-label="End Time" value="<%= new Date(item.data.end_datetime || new Date().toLocaleString()).toLocaleString() %>">
+</div>

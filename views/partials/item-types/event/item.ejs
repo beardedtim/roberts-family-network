@@ -1,0 +1,28 @@
+<a href="<%= item.data.url %>" target="_blank" rel="noopener noreferer">
+  <img class="img-fluid" src="<%= item.data.url %>" alt="<%= item.data.description || item.data.title + " photo"%>"
+  />
+</a>
+<div id="event-data">
+  <div class="group">
+    <h1>
+      <%= item.data.title %>
+    </h1>
+    <%- methods.parseMarkdown(item.data.description) %>
+  </div>
+  <ul class="group list-group">
+    <li class="list-group-item">Starts: <%= methods.formatDate(new
+        Date(item.data.start_datetime), 'iii MMMM do, y h:mm a' ) %>
+    </li>
+    <li class="list-group-item">Ends: <%= methods.formatDate(new Date(item.data.start_datetime), 'iii MMMM do, y h:mm a'
+        ) %>
+    </li>
+    <li class="list-group-item">
+      Address:
+      <a href="https://www.google.com/maps/dir/current+location/<%=  item.data.address.replace(/\n/g, ' ') %>"
+        target="_blank" rel="noopener noreferer">
+        <%= item.data.address %>
+      </a>
+    </li>
+
+  </ul>
+</div>

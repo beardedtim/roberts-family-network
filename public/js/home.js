@@ -55,6 +55,25 @@ window.addEventListener('load', () => {
       formData.set('description', data.get('description'))
     }
 
+    if (type === 'event') {
+      console.log([...data.entries()])
+      formData.set('title', data.get('event-title'))
+      formData.set('description', data.get('event-description'))
+      formData.set('address', data.get('event-address'))
+
+      formData.set(
+        'start_datetime',
+        new Date(data.get('event-start-datetime')).toISOString()
+      )
+
+      formData.set(
+        'end_datetime',
+        new Date(data.get('event-end-datetime')).toISOString()
+      )
+
+      formData.set('image', data.get('event-image'))
+    }
+
     return formData
   }
 
@@ -68,10 +87,8 @@ window.addEventListener('load', () => {
     await fetch('/items', {
       method: 'POST',
       body: formData,
+    }).then(() => {
+      window.location = '/'
     })
-      .then((x) => x.text())
-      .then(({ data, error }) => {
-        window.location = '/'
-      })
   })
 })

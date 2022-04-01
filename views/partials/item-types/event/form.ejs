@@ -44,3 +44,47 @@ Cookeville, TN
     aria-label="End Time"
   />
 </div>
+
+<div id="resp-group">
+  <div id="responsible-list">
+    <% if (item.data.responsbility_list) { %>
+        <% item.data.responsbility_list.forEach(resp=> { %>
+          <div class="input-group mb-3 responsible">
+            <select class="form-select">
+              <% users.forEach(user=> { %>
+                <option value="<%= user.id %>" <%= resp.id === user.id ? 'selected' : '' %>>
+                  <%= user.username %>
+                </option>
+                <% }) %>
+            </select>
+            <textarea class="form-control" type="text" rows="3"><%- resp.responsbility %></textarea>
+            <button class="btn btn-danger" onClick="deleteParent(event)">
+              <i class="bi-trash"></i>
+            </button>
+          </div>
+          <% }) %>
+      <% } %>
+  </div>
+  
+  <button class="btn btn-info" id="add-resp-button">
+    Add A Responsiblity
+  </button>
+</div>
+
+
+<template id="responsible-select">
+  <div class="input-group mb-3 responsible">
+    <select class="form-select">
+      <option selected>Select Person Responsible</option>
+      <% users.forEach(user=> { %>
+        <option value="<%= user.id %>">
+          <%= user.username %>
+        </option>
+        <% }) %>
+    </select>
+    <textarea class="form-control" type="text" rows="3">They are responsible for...</textarea>
+    <button class="btn btn-danger" onClick="deleteParent(event)">
+      <i class="bi-trash"></i>
+    </button>
+  </div>
+</template>

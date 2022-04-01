@@ -55,6 +55,19 @@ interface NewItem {
      * The Event End Datetime
      */
     end_datetime: string
+    /**
+     * Who is responsible for what?
+     */
+    responsibility_list: {
+      /**
+       * Who is responsible?
+       */
+      id: string
+      /**
+       * What are they responsible for?
+       */
+      responsbility: string
+    }[]
   }
 }
 

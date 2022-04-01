@@ -3,6 +3,7 @@ import Log from '@app/monitoring/log'
 import emitUserEvent from '@app/use-cases/emit-user-event'
 import validateOTP from '@app/use-cases/validate-otp'
 import createJWT from '@app/use-cases/create-jwt'
+import findAllUsers from '@app/use-cases/find-all-users'
 
 import {
   validateOTP as validateOTPInput,
@@ -68,3 +69,5 @@ export const updateUserProfile = async (
 
   return updatedUser
 }
+
+export const listAll = async () => findAllUsers()

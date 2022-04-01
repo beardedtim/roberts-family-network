@@ -1,5 +1,10 @@
-<img class="img-fluid" src="<%= item.data.url %>" alt="<%= item.data.description || item.data.title + " photo"%>"
+<img
+  class="img-fluid"
+  src="<%= item.data.url %>"
+  alt="<%= item.data.description || item.data.title + " photo"%>"
 />
+
+
 <div id="event-data">
   <div class="group">
     <h1>
@@ -21,6 +26,26 @@
         <%= item.data.address %>
       </a>
     </li>
-
   </ul>
+</div>
+
+<div class="list-group" id="responsibility-list">
+  <% if (item.data.responsbility_list) { %>
+    <ol class="list-group">
+      <% item.data.responsbility_list.forEach(resp=> { %>
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+          <div class="ms-2 me-auto">
+            <a href="/members/<%= resp.id %>" class="fw-bold"><%= users.find(user => user.id === resp.id).username %></a>
+            <span>
+              Is responsible for
+            </span>
+          </div>
+          
+          <div class="resp-markdown">
+            <%- methods.parseMarkdown(resp.responsbility) %>
+          </div>
+        </li>
+        <% }) %>
+    </ol>
+  <% } %>
 </div>

@@ -34,6 +34,7 @@ const EventItem = Joi.object({
   description: Joi.string().optional().allow(''),
   address: Joi.string().required(),
   key: Joi.string().optional().allow(''),
+  responsbility_list: Joi.any(),
 })
 
 export const create = Joi.object({

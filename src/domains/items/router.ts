@@ -57,7 +57,16 @@ router.post(
           last_updated: req.body.last_updated,
           start_datetime: req.body.start_datetime,
           end_datetime: req.body.end_datetime,
+          responsbility_list: req.body.responsbility_list.map((str: string) => {
+            const [id, responsbility] = str.split(',')
+
+            return {
+              id,
+              responsbility,
+            }
+          }),
         }
+
         const files = req.files as Express.MulterS3.File[]
 
         // if they sent a photo
@@ -149,7 +158,16 @@ router.put(
           last_updated: req.body.last_updated,
           start_datetime: req.body.start_datetime,
           end_datetime: req.body.end_datetime,
+          responsbility_list: req.body.responsbility_list.map((str: string) => {
+            const [id, responsbility] = str.split(',')
+
+            return {
+              id,
+              responsbility,
+            }
+          }),
         }
+
         const files = req.files as Express.MulterS3.File[]
 
         // if they sent a photo
@@ -158,7 +176,7 @@ router.put(
         }
       }
 
-      const updated = await Controller.updateById(req.params.id, req.body)
+      const updated = await Controller.updateById(req.params.id, item)
 
       res.status(200).json({
         data: updated,

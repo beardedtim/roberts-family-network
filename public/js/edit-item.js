@@ -39,6 +39,8 @@ window.addEventListener('load', () => {
 
   const form = document.querySelector('form')
   const deleteButton = document.getElementById('delete-item')
+  const addRespButton = document.getElementById('add-resp-button')
+  const responsibleList = document.getElementById('responsible-list')
 
   const getCurrentItemType = () => form.dataset.type
   const getCurrentItemId = () => form.dataset.itemid
@@ -53,6 +55,36 @@ window.addEventListener('load', () => {
       window.location = '/'
     })
   })
+
+  addRespButton.addEventListener('click', (e) => {
+    e.preventDefault()
+
+    const template = document.getElementById('responsible-select')
+
+    const clone = template.content.cloneNode(true)
+
+    responsibleList.appendChild(clone)
+  })
+
+  const getResponsibleParties = () => {
+    const groups = responsibleList.querySelectorAll('.responsible')
+
+    return (
+      [...groups]
+        .map((group) => [
+          group.querySelector('select').value,
+          group.querySelector('textarea').value,
+        ])
+        // these are the two hard-coded values that come in
+        // for the template. Do not save anything if all
+        // it was was something the organizer didn't delete
+        .filter(
+          ([id, res]) =>
+            id !== 'Select Person Responsible' &&
+            res !== 'They are responsible for...'
+        )
+    )
+  }
 
   const getFormDataForType = (type, data) => {
     const formData = new FormData()
@@ -89,6 +121,11 @@ window.addEventListener('load', () => {
       if (data.has('event-image')) {
         formData.set('image', data.get('event-image'))
       }
+
+      const responsible = getResponsibleParties()
+      for (let i = 0; i < responsible.length; i++) {
+        formData.append('responsbility_list[]', responsible[i])
+      }
     }
 
     return formData
@@ -105,7 +142,7 @@ window.addEventListener('load', () => {
       method: 'PUT',
       body: formData,
     }).then(() => {
-      window.location = '/'
+      window.location = `/items/${getCurrentItemId()}`
     })
   })
 
@@ -129,3 +166,7 @@ window.addEventListener('load', () => {
     )}T${pad(endTime.getHours())}:${pad(endTime.getMinutes())}`
   }
 })
+
+function deleteParent(event) {
+  event.currentTarget.parentNode.remove()
+}

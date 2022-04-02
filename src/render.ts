@@ -78,7 +78,9 @@ const renderViewItem: RequestHandler = async (req, res) => {
     scripts: [
       'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js',
       'https://cdn.quilljs.com/1.3.6/quill.js',
+      'https://unpkg.com/ics-js@0.10.2/dist/ics-js.js',
       '/js/home.js',
+      '/js/item.js',
     ],
   })
 }

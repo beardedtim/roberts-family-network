@@ -1,5 +1,5 @@
 <%- include('./partials/header') %>
-<div class="item">
+<div class="item" data-item-data="<%= JSON.stringify(item) %>">
 <% if (item.type==='text' ) { %>
   <%- include('./partials/item-types/text/item.ejs',{ item: item }) %>
 <% } else if(item.type === 'image') { %>
@@ -8,7 +8,7 @@
   <%- include('./partials/item-types/event/item.ejs',{ item: item }) %>
 <% } %>
 <% if (canEdit) { %>
-  <a href="/items/<%= item.id %>/edit">
+  <a href="/items/<%= item.id %>/edit" class="btn btn-primary">
     Edit
   </a>
 <% } %>

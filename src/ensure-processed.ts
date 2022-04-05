@@ -6,4 +6,4 @@
  * event listener or possibly needing to run some
  * DB migrations/connections/etc or telemetry/metrics
  */
-export default Promise.all([import('./connections/index')])
+export default [require('./connections/index')]

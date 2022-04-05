@@ -1,0 +1,17 @@
+version: '3'
+services:
+  database:
+    image: postgres
+    environment:
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: roberts_family_network
+  
+  cache:
+    image: redis
+    command: redis-server --requirepass password
+
+  app:
+    image: rfn
+    ports:
+      - "8080:5000"
